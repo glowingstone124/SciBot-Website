@@ -2,10 +2,13 @@
     font-size: 2rem;
     font-weight: 200;
 }
+body{
+    padding: 2vw;
+    background-size: cover;
+    background-image: linear-gradient(to right top, #a9c32f, #a6c941, #a3ce51, #a1d460, #9fd96f, #96dc7d, #8ddf8b, #85e299, #73e3ab, #63e4bc, #56e4cc, #50e3da);
+}
 *{
     font-family: Inter;
-    margin-left: 2vw;
-    margin-right: 2vw;
 }
 .header{
     font-size: 6rem;
@@ -13,24 +16,34 @@
     margin: 8px;
 }
 .button{
+    margin: 3vw;
     text-decoration: none;
     font-size: 1.2rem;
-    border: 2px #000000 solid;
-    padding: 10px;
+    background-color: #2fc9bc;
+    padding: 20px;
     border-radius: 10px;
-    transition: 0.3s background-color;
+    transition: 0.3s box-shadow;
+    color: white;
 }
 .button:hover{
-    background-color: rgb(0, 0, 0);
     color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 @font-face {
     font-family: Inter;
     src: url("/static/inter.ttf");
 }
 .introduction{
-    border: 2px solid black;
+    backdrop-filter: blur(10px);
+    background-color: aquamarine;
     border-radius: 5px;
+    padding: 35px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+span{
+    display: flex;
+    width: 90vw;
+    padding: auto;
 }
 .introduction p{
     font-size: 1.5rem;
@@ -47,8 +60,8 @@
 .abstract{
     font-size: 80px;
     font-weight: 300;
-}
 
+}
 /* BLACK */
 .black .header{
     color: white;

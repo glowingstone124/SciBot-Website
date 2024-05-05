@@ -1,4 +1,4 @@
-let nowTheme = 0;
+let nowTheme = 1;
 
 function toggleTheme() {
     if (nowTheme === 0) {
