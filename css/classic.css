@@ -5,41 +5,62 @@
 body{
     padding: 2vw;
     background-size: cover;
-    background-image: linear-gradient(to right top, #a9c32f, #a6c941, #a3ce51, #a1d460, #9fd96f, #96dc7d, #8ddf8b, #85e299, #73e3ab, #63e4bc, #56e4cc, #50e3da);
+    background-image: linear-gradient(to right, #085078, #5d938d);
 }
 *{
     font-family: Inter;
 }
-.header{
+.header {
     font-size: 6rem;
-    font-weight: 200;
+    font-weight: 600;
     margin: 8px;
+    text-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    color: #e4e4ea;
+}
+h3{
+    color: white;
+}
+.main{
+    display: table;
+    margin: 0 auto;
 }
 .button{
     margin: 3vw;
     text-decoration: none;
     font-size: 1.2rem;
-    background-color: #2fc9bc;
+    background: #085078;
+    backdrop-filter: blur(2px);
     padding: 20px;
     border-radius: 10px;
-    transition: 0.3s box-shadow;
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
     color: white;
 }
 .button:hover{
+    background: #85d8ce;
     color: white;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: rgba(124, 167, 215, 0.24) 0px 3px 8px;
 }
 @font-face {
     font-family: Inter;
     src: url("/static/inter.ttf");
 }
-.introduction{
+.introduction {
     backdrop-filter: blur(10px);
-    background-color: aquamarine;
     border-radius: 5px;
+    background: rgba(35, 155, 182, 0.7);
     padding: 35px;
+    color: white;
+    min-width: 60vw;
+    max-width: 75vw;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    transition: all 0.3s ease;
 }
+
+.introduction:hover {
+    box-shadow: rgba(99, 99, 99, 0.6) 0px 20px 30px 0px;
+    transform: translate(-5px,-12px)
+}
+
 span{
     display: flex;
     width: 90vw;
@@ -60,7 +81,7 @@ span{
 .abstract{
     font-size: 80px;
     font-weight: 300;
-
+    color: white;
 }
 /* BLACK */
 .black .header{
