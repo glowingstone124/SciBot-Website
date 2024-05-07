@@ -47,7 +47,7 @@ h3{
 .introduction {
     backdrop-filter: blur(10px);
     border-radius: 5px;
-    background: rgba(35, 155, 182, 0.7);
+    background: rgba(35, 155, 182, 0.5);
     padding: 35px;
     color: white;
     min-width: 60vw;
