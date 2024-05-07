@@ -17,6 +17,11 @@ body{
     text-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     color: #e4e4ea;
 }
+.nav {
+    flex-wrap: wrap;
+    max-width: 55vw;
+
+}
 h3{
     color: white;
 }
@@ -25,15 +30,18 @@ h3{
     margin: 0 auto;
 }
 .button{
-    margin: 3vw;
+    margin-top: 20px;
+    margin: 2vw;
     text-decoration: none;
     font-size: 1.2rem;
+    padding-top: 20px;
     background: #085078;
     backdrop-filter: blur(2px);
     padding: 20px;
     border-radius: 10px;
     transition: box-shadow 0.3s ease, background-color 0.3s ease;
     color: white;
+    min-width: 5rem;
 }
 .button:hover{
     background: #85d8ce;
