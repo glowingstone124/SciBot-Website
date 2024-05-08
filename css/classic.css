@@ -35,7 +35,7 @@ h3{
     text-decoration: none;
     font-size: 1.2rem;
     padding-top: 20px;
-    background: #085078;
+    background: #0e71a6;
     backdrop-filter: blur(2px);
     padding: 20px;
     border-radius: 10px;
@@ -56,7 +56,8 @@ h3{
     backdrop-filter: blur(10px);
     border-radius: 5px;
     background: rgba(35, 155, 182, 0.5);
-    padding: 35px;
+    padding: 55px;
+    margin-top: 70px;
     color: white;
     min-width: 60vw;
     max-width: 75vw;
