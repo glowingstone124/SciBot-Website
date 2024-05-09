@@ -1,6 +1,7 @@
 .title h3{
     font-size: 2rem;
     font-weight: 200;
+    animation: Start 1s ease;
 }
 body{
     padding: 2vw;
@@ -12,10 +13,27 @@ body{
 }
 .header {
     font-size: 6rem;
-    font-weight: 600;
+    font-weight: 200;
     margin: 8px;
+    animation: Start 1s ease;
     text-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     color: #e4e4ea;
+}
+@keyframes Start {
+    0% {
+        opacity: 0;
+    }
+    100%{
+        opacity: 100%;
+    }
+}
+@keyframes moveIn {
+    0% {
+        transform: translateX(-1000px); /* 元素起始位置 */
+    }
+    100% {
+        transform: translateX(0); /* 元素结束位置 */
+    }
 }
 .nav {
     flex-wrap: wrap;
@@ -53,6 +71,7 @@ h3{
     src: url("/static/inter.ttf");
 }
 .introduction {
+    animation: moveIn 1s ease;
     backdrop-filter: blur(10px);
     border-radius: 5px;
     background: rgba(35, 155, 182, 0.5);

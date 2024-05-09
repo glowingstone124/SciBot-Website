@@ -9,4 +9,19 @@ function toggleTheme() {
         nowTheme = 0;
     }
 }
+const headers = document.querySelectorAll('.introduction');
+const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const element = entry.target;
+            element.style.animation = 'moveIn 0.5s ease';
+            observer.unobserve(element);
+        }
+    });
+});
+headers.forEach(header => {
+    observer.observe(header);
+});
+
+observer.observe(header);
 toggleTheme()
