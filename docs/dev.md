@@ -13,20 +13,32 @@ import java.util.logging.Level
 class PluginMain : Plugin {
     var sender: SimpleSender? = null
     var logger: SimpleLogger? = null
-    override suspend fun start(logger: SimpleLogger, sender: SimpleSender) {
-        logger.log("hello,World", Level.INFO)
+    /*
+    This is the sample plugin of SciBot.
+    Define Main class and Plugin Name in resources/plugin.yml
+    use @GroupHandler to create an event handler.
+    implements Plugin interface to create a main class.
+     */
+    override suspend fun start() {
+        logger?.log("hello,World", Level.INFO)
         this.sender = sender
         this.logger = logger
-        sender.plainSend("hello,world", Sender.Type.GROUP,946085440)
+        sender?.plainSend("hello,world", Sender.Type.GROUP,946085440)
     }
-    @Annonations.PlainHandler(MessageConstructor.Types.PLAIN)
+    @Annonations.GroupHandler(MessageConstructor.Types.PLAIN)
     fun doSomething(event: Events.MajorEvent) {
         println("MyPlugin called")
-        for (any in event.msgArr) {
-            if(any is Events.PlainMessage) {
-                println("recived message: ${any.message} from ${event.sender.uid}")
+        event.msgArr.forEach { any ->
+            if (any is Events.PlainMessage) {
+                logger?.log("Received message: ${any.message} from ${event.sender.uid}")
             }
         }
+    }
+    fun getLogger(logger: SimpleLogger ){
+        this.logger = logger
+    }
+    fun getSender(sender: SimpleSender ){
+        this.sender = sender
     }
 }
 ```
@@ -41,7 +53,7 @@ plugin-name: SamplePlugin
 ```
 其中，main-class是你的插件主类，plugin-name是你自定义的插件名称。它会显示在插件列表中，分配给你的Logger也会使用此前缀。
 
-你会发现，我们在插件开头定义了`sender`和`logger`，它们是插件启动时自动由插件管理器传入的实例。
+你会发现，我们在插件开头定义了`sender`和`logger`，它们是可以在插件启动时调用`getSender()`和`getLogger()`来获取instance的实例。
 
 其中，`sender`类型是`SimpleSender`,`logger`类型是`SimpleLogger`.
 
@@ -92,12 +104,12 @@ Sender同样有两个方法。
 
 ### 消息监听器
 
-在SciBot插件中，您只需要为一个函数加上`@PlainHandler`或者`@PrivateHandler`即可将它们注册为监听器。
+在SciBot插件中，您只需要为一个函数加上`@GorupHandler`或者`@PrivateHandler`即可将它们注册为监听器。
 
 ```kotlin
     @Retention(AnnotationRetention.RUNTIME)
     @Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER)
-    annotation class PlainHandler(val type:Types = Types.PLAIN)
+    annotation class GroupHandler(val type:Types = Types.PLAIN)
 
     @Retention(AnnotationRetention.RUNTIME)
     @Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER)
@@ -108,7 +120,7 @@ Sender同样有两个方法。
 作为一个监听器，你只需要设置一个传参。
 
 ```kotlin
-@Annonations.PlainHandler(MessageConstructor.Types.PLAIN)
+@Annonations.GroupHandler(MessageConstructor.Types.PLAIN)
 fun doSomething(event: Events.MajorEvent) {
     println("MyPlugin called")
     for (any in event.msgArr) {
@@ -126,3 +138,5 @@ data class Sender(val uid:Long , val nickname:String, val role:String? = "privat
 其中，`uid`是QQ号,`nickname`是昵称，如果是群聊消息，`role`代表这个用户在群聊中的角色。可选值有 `owner` 或 `admin` 或 `member`。
 
 当然，`@PrivateHandler`仅用于接受私聊消息，所以可以无视role字段。
+
+目前为止，您已经简单实现了一个在启动时发送HelloWorld并且Log的插件。
