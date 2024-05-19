@@ -5,17 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>插件市场</title>
     <style>
-        /* 添加CSS样式以美化页面 */
-        body {
-            font-family: Arial, sans-serif;
+        body{
             margin: 0;
             padding: 0;
         }
+        .ver{
+            color: #cdc8c8;
+            font-size: 15px;
+        }
         header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
+            color: #2f2e2e;
+            
+            font-size: 2.5em;
             text-align: center;
+        }
+        header h1{
+            font-weight: 100;
         }
         .container {
             max-width: 800px;
@@ -23,12 +28,15 @@
             padding: 0 20px;
         }
         .plugin {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 10px;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+            padding:2em;
+            border-radius: 1em;
+            margin-bottom: 1em;
         }
         .plugin h2 {
-            margin-top: 0;
+            margin: 0 auto;
+            font-size: 45px;
+            font-weight: 200;
         }
     </style>
 </head>
@@ -36,15 +44,49 @@
     <header>
         <h1>插件市场</h1>
     </header>
-    <div class="container">
-        <div class="plugin">
-            <h2>插件名称</h2>
-            <p>这是一个描述插件功能的简短描述。</p>
-            <p>作者：插件作者</p>
-            <p>版本：1.0</p>
-            <a href="download_link">下载</a>
-        </div>
-        <!-- 可以继续添加更多插件信息 -->
+    <div class="container" id="pluginContainer">
+        <!-- 插件信息将动态生成到这里 -->
     </div>
+
+    <script>
+            fetch("plugins/repo.json")
+            .then((response) => response.json()) // 处理响应数据为 JSON 格式
+            .then((data) => {
+                var pluginContainer = document.getElementById("pluginContainer");
+                console.log(data)
+                pluginContainer.appendChild(generatePluginInfo(data));
+            })
+            .catch((error) => console.error('Error fetching plugin data:', error));
+
+        // 生成插件信息的函数
+        function generatePluginInfo(data) {
+            var pluginDiv = document.createElement("div");
+            pluginDiv.classList.add("plugin");
+
+            var heading = document.createElement("h2");
+            heading.textContent = data.name;
+            pluginDiv.appendChild(heading);
+
+            var authorPara = document.createElement("p");
+            authorPara.textContent = "作者：" + data.author;
+            pluginDiv.appendChild(authorPara);
+
+            var versionPara = document.createElement("p");
+            versionPara.textContent = "版本：" + data.version;
+            pluginDiv.appendChild(versionPara);
+
+            var descriptionPara = document.createElement("p");
+            descriptionPara.textContent = data.description;
+            pluginDiv.appendChild(descriptionPara);
+
+            var repositoryLink = document.createElement("a");
+            repositoryLink.textContent = "查看仓库";
+            repositoryLink.href = data.repository;
+            repositoryLink.target = "_blank"; // 在新标签页中打开链接
+            pluginDiv.appendChild(repositoryLink);
+
+            return pluginDiv;
+        }
+    </script>
 </body>
 </html>
