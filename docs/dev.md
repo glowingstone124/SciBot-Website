@@ -6,10 +6,9 @@
 
 编写SciBot的插件其实并不难，让我们从简单的init和注册监听器开始。
 
-```kotlin
-import ind.glowingstone.MessageConstructor
-import java.util.logging.Level
+在开始之前，请先引入本地依赖：[GitHub仓库](https://github.com/QuantumOriginal/Scibot-Dependencies)
 
+```kotlin
 class PluginMain : Plugin {
     var sender: SimpleSender? = null
     var logger: SimpleLogger? = null
