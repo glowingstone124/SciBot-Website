@@ -43,4 +43,4 @@ auth: 123456abc
 
 `auth`是onebot的authkey。
 
-插件应当放置于`logs`目录中。
+插件应当放置于`plugins`目录中。
