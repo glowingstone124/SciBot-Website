@@ -1,7 +1,16 @@
-{
-    "name":"TestPlugin",
-    "version":1,
-    "author":"author",
-    "description":"description",
-    "repository":"https://github.com/QuantumOriginal/Scibot-SamplePlugin"
-}
+[
+    {
+        "name":"TestPlugin",
+        "version":1,
+        "author":"author",
+        "description":"description",
+        "repository":"https://github.com/QuantumOriginal/Scibot-SamplePlugin"
+    }
+        {
+        "name":"PlaceHolder",
+        "version":1,
+        "author":"author",
+        "description":"description",
+        "repository":"https://github.com/QuantumOriginal/Scibot-SamplePlugin"
+    }
+]
