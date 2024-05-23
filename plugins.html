@@ -45,48 +45,47 @@
         <h1>插件市场</h1>
     </header>
     <div class="container" id="pluginContainer">
-        <!-- 插件信息将动态生成到这里 -->
     </div>
 
     <script>
-            fetch("plugins/repo.json")
-            .then((response) => response.json()) // 处理响应数据为 JSON 格式
-            .then((data) => {
-                var pluginContainer = document.getElementById("pluginContainer");
-                console.log(data)
-                pluginContainer.appendChild(generatePluginInfo(data));
-            })
-            .catch((error) => console.error('Error fetching plugin data:', error));
+fetch("plugins/repo.json")
+    .then((response) => response.json())
+    .then((data) => {
+        var pluginContainer = document.getElementById("pluginContainer");
+        console.log(data);
+        data.forEach((plugin) => {
+            pluginContainer.appendChild(generatePluginInfo(plugin));
+        });
+    })
+    .catch((error) => console.error('Error fetching plugin data:', error));
+function generatePluginInfo(data) {
+    var pluginDiv = document.createElement("div");
+    pluginDiv.classList.add("plugin");
 
-        // 生成插件信息的函数
-        function generatePluginInfo(data) {
-            var pluginDiv = document.createElement("div");
-            pluginDiv.classList.add("plugin");
+    var heading = document.createElement("h2");
+    heading.textContent = data.name;
+    pluginDiv.appendChild(heading);
 
-            var heading = document.createElement("h2");
-            heading.textContent = data.name;
-            pluginDiv.appendChild(heading);
+    var authorPara = document.createElement("p");
+    authorPara.textContent = "作者：" + data.author;
+    pluginDiv.appendChild(authorPara);
 
-            var authorPara = document.createElement("p");
-            authorPara.textContent = "作者：" + data.author;
-            pluginDiv.appendChild(authorPara);
+    var versionPara = document.createElement("p");
+    versionPara.textContent = "版本：" + data.version;
+    pluginDiv.appendChild(versionPara);
 
-            var versionPara = document.createElement("p");
-            versionPara.textContent = "版本：" + data.version;
-            pluginDiv.appendChild(versionPara);
+    var descriptionPara = document.createElement("p");
+    descriptionPara.textContent = data.description;
+    pluginDiv.appendChild(descriptionPara);
 
-            var descriptionPara = document.createElement("p");
-            descriptionPara.textContent = data.description;
-            pluginDiv.appendChild(descriptionPara);
+    var repositoryLink = document.createElement("a");
+    repositoryLink.textContent = "查看仓库";
+    repositoryLink.href = data.repository;
+    repositoryLink.target = "_blank";
+    pluginDiv.appendChild(repositoryLink);
 
-            var repositoryLink = document.createElement("a");
-            repositoryLink.textContent = "查看仓库";
-            repositoryLink.href = data.repository;
-            repositoryLink.target = "_blank"; // 在新标签页中打开链接
-            pluginDiv.appendChild(repositoryLink);
-
-            return pluginDiv;
-        }
+    return pluginDiv;
+}
     </script>
 </body>
 </html>
