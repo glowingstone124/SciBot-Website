@@ -50,13 +50,19 @@ class PluginMain : Interfaces.Plugin {
             }
         }
     }
+    @Annonations.Inject(InjectableTypes.LOGGER)
     fun getLogger(logger: Interfaces.SimpleLogger){
+        println("Logger called")
         this.logger = logger
     }
+    @Annonations.Inject(InjectableTypes.SENDER)
     fun getSender(sender: Interfaces.SimpleSender){
+        println("Sender called")
         this.sender = sender
     }
+    @Annonations.Inject(InjectableTypes.HOST)
     fun getHost(host: HostOperations){
+        println("Host called")
         this.host = host;
     }
 }
