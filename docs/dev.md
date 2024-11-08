@@ -8,10 +8,15 @@
 
 在开始之前，请先引入本地依赖：[GitHub仓库](https://github.com/QuantumOriginal/Scibot-Dependencies)
 
-```kotlin
-class PluginMain : Plugin {
-    var sender: SimpleSender? = null
-    var logger: SimpleLogger? = null
+```Kotlin
+
+import org.scibot.*
+import java.util.logging.Level
+
+class PluginMain : Interfaces.Plugin {
+    var sender: Interfaces.SimpleSender? = null
+    var logger: Interfaces.SimpleLogger? = null
+    var host: HostOperations? = null
     /*
     This is the sample plugin of SciBot.
     Define Main class and Plugin Name in resources/plugin.yml
@@ -19,10 +24,22 @@ class PluginMain : Plugin {
     implements Plugin interface to create a main class.
      */
     override suspend fun start() {
-        logger?.log("hello,World", Level.INFO)
-        this.sender = sender
-        this.logger = logger
-        sender?.plainSend("hello,world", Sender.Type.GROUP,946085440)
+        if(logger == null){
+            throw IllegalArgumentException("logger isn't given")
+        }
+        if(sender == null){
+            throw IllegalArgumentException("sender isn't given")
+        }
+        if(host == null){
+            throw IllegalArgumentException("host isn't given")
+        }
+        val result = host!!.getCurrentLogin()
+        val qq_search = host!!.getStrangerInfo(1294915648, true)
+        logger!!.log("Login with ${result.nickname}")
+        logger!!.log("Nickname of 1294915648: ${qq_search.nickname}")
+        logger!!.log("hello,World", Level.INFO)
+        sender!!.plainSend("hello,world", Sender.Type.GROUP,946085440)
+        sender!!.send(mutableListOf(Events.AtMessage(1294915648L)), Sender.Type.GROUP, 946085440)
     }
     @Annonations.GroupHandler(MessageConstructor.Types.PLAIN)
     fun doSomething(event: Events.MajorEvent) {
@@ -33,11 +50,14 @@ class PluginMain : Plugin {
             }
         }
     }
-    fun getLogger(logger: SimpleLogger ){
+    fun getLogger(logger: Interfaces.SimpleLogger){
         this.logger = logger
     }
-    fun getSender(sender: SimpleSender ){
+    fun getSender(sender: Interfaces.SimpleSender){
         this.sender = sender
+    }
+    fun getHost(host: HostOperations){
+        this.host = host;
     }
 }
 ```
@@ -52,7 +72,7 @@ plugin-name: SamplePlugin
 ```
 其中，main-class是你的插件主类，plugin-name是你自定义的插件名称。它会显示在插件列表中，分配给你的Logger也会使用此前缀。
 
-你会发现，我们在插件开头定义了`sender`和`logger`，它们是可以在插件启动时调用`getSender()`和`getLogger()`来获取instance的实例。
+你会发现，我们在插件开头定义了`sender`，`logger`和`host`，它们是可以在插件启动时调用`getSender()`，`getLogger()`，`getHost()`来获取instance的实例。
 
 其中，`sender`类型是`SimpleSender`,`logger`类型是`SimpleLogger`.
 
@@ -66,6 +86,12 @@ interface SimpleSender{
 interface SimpleLogger{
     fun log(msg: String, level: Level? = Level.INFO)
     fun debug(msg: String)
+}
+
+interface HostOperations {
+    fun getCurrentLogin(): org.scibot.LoginInfo
+
+    fun getStrangerInfo(userId: Long, cache: Boolean): StrangerInfo
 }
 ```
 没错，sender是异步的，它不会阻塞主线程。
@@ -100,6 +126,31 @@ Sender同样有两个方法。
     )
 ```
 关于具体消息类型的定义，请参考具体的消息段解释，您只需要知道它可以同时组合多个消息类型。
+### Host
+
+Host提供了一些方法用于向onebot发送请求。
+
+目前提供的方法有：
+
+`getCurrentLogin()` 
+
+返回当前登录的用户名和uid. `userid`: Long
+`nickname`: String
+
+`getStrangerInfo(userId: Long, cache: Boolean)`
+
+返回一个指定的陌生人信息，cache选项用于选择是否从缓存获取，具体请详询onebot实现。
+
+StrangerInfo包含以下内容： 
+```Kotlin
+val userid: Long
+
+val nickname: String
+
+val sex: Gender
+
+val age: Int
+```
 
 ### 消息监听器
 
